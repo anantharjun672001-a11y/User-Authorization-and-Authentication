@@ -53,3 +53,21 @@ export const loginUser = async (req,res) => {
         res.status(500).json({ message: "Server error", error: error.message });
     }
 }
+
+
+// Get User Profile
+
+export const getUserProfile = async (req,res) => {
+    try {
+        const user = await User.findById(req.user.id).select("-password");
+
+        if (!user) {
+            return res.status(404).json({ message: "User Not Found" });
+        }           
+
+        res.status(200).json(user);
+        
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
